@@ -1,5 +1,5 @@
 FROM python:3.9-alpine3.13
-LABEL maintainer="Dhyey Dave (dhyeydave2017@gmail.com)"
+LABEL maintainer="dhyeydave2017@gmail.com"
 
 ENV PYTHONUNBUFFERED 1
 
@@ -9,8 +9,8 @@ WORKDIR /app
 EXPOSE 8000
 
 RUN python -m venv ./py && \
-    /py/scripts/pip install --upgrade pip && \
-    /py/scripts/pip install -r /tmp/requirements.txt && \
+    /py/bin/pip install --upgrade pip && \
+    /py/bin/pip install -r /tmp/requirements.txt && \
     rm -rf /tmp && \
     adduser \
         --disabled-password \
