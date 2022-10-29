@@ -2,7 +2,6 @@
     Tests for models
 """
 
-import email
 
 from django.contrib.auth import get_user_model
 from django.test import TestCase
@@ -19,7 +18,7 @@ class ModelTests(TestCase):
         """
         email = "test@example.com"
         password = "testpass123"
-        user = get_user_model().objects.create_user(email=email, password=password)  # type: ignore
+        user = get_user_model().objects.create_user(email, password)
 
         self.assertEqual(user.email, email)
         self.assertTrue(user.check_password(password))
@@ -36,7 +35,7 @@ class ModelTests(TestCase):
         ]
 
         for email, expected in sample_emails:
-            user = get_user_model().objects.create_user(email, "sample123")  # type: ignore
+            user = get_user_model().objects.create_user(email, "sample123")
             self.assertEqual(user.email, expected)
 
     def test_new_user_without_email_raises_error(self):
@@ -50,7 +49,9 @@ class ModelTests(TestCase):
         """
         Test creating a super user.
         """
-        user = get_user_model().objects.create_superuser("test@example.com", "test123")  # type: ignore
+        user = get_user_model(). \
+            objects. \
+            create_superuser("test@example.com", "test123")  # type: ignore
 
         self.assertTrue(user.is_superuser)
         self.assertTrue(user.is_staff)
