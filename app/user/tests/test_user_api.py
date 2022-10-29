@@ -86,8 +86,10 @@ class PublicUserApiTests(TestCase):
 
         create_user(**user_details)
 
-        payload = {"email": "test@example.com", "password": "test-user-password123"}
-
+        payload = {
+            "email": user_details["email"],
+            "password": user_details["password"],
+        }
         res = self.client.post(TOKEN_URL, payload)
 
         self.assertIn("token", res.data)
@@ -97,10 +99,7 @@ class PublicUserApiTests(TestCase):
         """Test returns error if credentails invalid"""
         create_user(email="test@example.com", password="goodpass")
 
-        payload = {
-            "email": user_details["email"],
-            "password": user_details["password"],
-        }
+        payload = {"email": "test@example.com", "password": "badpass"}
 
         res = self.client.post(TOKEN_URL, payload)
 
