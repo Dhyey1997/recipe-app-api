@@ -32,7 +32,7 @@ class PublicTagsAPITest(TestCase):
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
-class PrivateTagsAPITest(TestCase):
+class PrivateTagsAPITests(TestCase):
     '''Test authenticated API requests.'''
 
     def setUp(self):
@@ -45,7 +45,6 @@ class PrivateTagsAPITest(TestCase):
         Tag.objects.create(user=self.user, name='Vegan')
         Tag.objects.create(user=self.user, name='Dessert')
 
-        # res = self.client.get(path=TAGS_URL)
         res = self.client.get(TAGS_URL)
 
         tags = Tag.objects.all().order_by('-name')
