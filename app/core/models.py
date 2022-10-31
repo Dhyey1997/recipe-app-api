@@ -1,6 +1,6 @@
-"""
+'''
 Database Models.
-"""
+'''
 
 from django.conf import settings
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
@@ -9,16 +9,16 @@ from django.db import models
 
 
 class UserManager(BaseUserManager):
-    """
+    '''
     Manager for users.
-    """
+    '''
 
     def create_user(self, email, password=None, **extra_fields):
-        """
+        '''
         Create, save and return a new user.
-        """
+        '''
         if not email:
-            raise ValueError("User must have an email address.")
+            raise ValueError('User must have an email address.')
         user = self.model(email=self.normalize_email(email), **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
@@ -26,11 +26,11 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password=None, **extra_fields):
-        """
+        '''
         Create, save and return a superuser
-        """
+        '''
         if not email:
-            raise ValueError("Super User must have an email address.")
+            raise ValueError('Super User must have an email address.')
         user = self.create_user(email, password)
 
         user.is_staff = True
@@ -41,9 +41,9 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    """
+    '''
     User in the system.
-    """
+    '''
 
     email = models.EmailField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
@@ -52,7 +52,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    USERNAME_FIELD = "email"
+    USERNAME_FIELD = 'email'
 
 
 class Recipe(models.Model):
@@ -75,7 +75,10 @@ class Recipe(models.Model):
 class Tag(models.Model):
     '''Tag for filtering recipies.'''
     name = models.CharField(max_length=255)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
 
     def __str__(self):
         return self.name
